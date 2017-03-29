@@ -2,8 +2,12 @@ import os
 import glob
 import time
 import requests, json
-import GPIO
+import RPi.GPIO as GPIO
 
+GPIO.setmode(GPIO.BOARD)
+mode=GPIO.getmode()
+GPIO.setup(11,GPIO.OUT)
+GPIO.setup(13,GPIO.OUT)
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
 base_dir = '/sys/bus/w1/devices/'
@@ -28,6 +32,14 @@ def read_temp():
 while True:
  print(read_temp()) 
  temper=read_temp()
- res= requests.post("https://api.thingspeak.com/update?api_key=I1GWGSAM6V2EHB32&field1="+str(temper),data="a")
+ if int(temper)==28:
+  GPIO.output(11,GPIO.HIGH)
+  GPIO.output(13,GPIO.LOW)
+ elif int(temper)==24:
+  GPIO.output(11,GPIO.LOW)
+  GPIO.output(13,GPIO.HIGH)
+ else:
+  GPIO.output(11,GPIO.LOW)
+  GPIO.output(13,GPIO.LOW)
  time.sleep(1)
 
