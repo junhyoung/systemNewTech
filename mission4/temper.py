@@ -31,5 +31,5 @@ while True:
  res1= urllib.request.Request("http://10.42.0.203:8080/logone?temp="+str(temper))
  data= urllib.request.urlopen(res1).read()
  res= requests.post("https://api.thingspeak.com/update?api_key=I1GWGSAM6V2EHB32&field1="+str(temper),data="a")
- time.sleep(1)
+ time.sleep(10)
 
