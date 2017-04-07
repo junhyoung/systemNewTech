@@ -1,0 +1,33 @@
+import time
+import RPi.GPIO as GPIO
+
+pin=[26,29,31,33,35,37,32,36,38,40]
+
+# to use Raspberry Pi board pin numbers
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(24, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+
+def setup(p):
+  GPIO.setup(pin[p], GPIO.OUT)
+
+def out(p, v):
+  GPIO.output(pin[i], v)
+for i in range(0, len(pin)): setup(i)
+
+for i in range(0, len(pin)): out(i, 0);
+def gotit(channel):
+  print("got it", channel)
+GPIO.add_event_detect(24, GPIO.RISING, callback=gotit, bouncetime=300)
+try:
+  while True:
+    for i in range(0, len(pin)):
+      out(i, 1);
+      out(i-1,0)
+      time.sleep(0.1)
+
+    , -1):
+      out(i, 0);
+      time.sleep(0.1)
+except KeyboardInterrupt:
+  GPIO.cleanup()
+
