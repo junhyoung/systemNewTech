@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+ google.charts.load('current', {'packages':['line']});
+      google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+//      data.addColumn('number', 'Day');
+//      data.addColumn('number', 'Temper');
+      <%HEADER%>
+
+      data.addRows([
+	<%DATA%>
+      ]);
+
+      var options = {
+        chart: {
+          title: 'Temperature Graph',
+          subtitle: '20123425 Choi Jun Hyeong'
+        },
+        width: 900,
+        height: 500
+      };
+
+      var chart = new google.charts.Line(document.getElementById('linechart_material'));
+
+      chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+    </script>
+  </head>
+  <body>
+    <div id="linechart_material" style="width: 900px; height: 500px"></div>
+  </body>
+</html>
+

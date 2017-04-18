@@ -3,7 +3,7 @@ import glob
 import time
 import requests, json
 import RPi.GPIO
-
+import urllib.request
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
 base_dir = '/sys/bus/w1/devices/'
@@ -26,8 +26,10 @@ def read_temp():
         temp_f = temp_c * 9.0 / 5.0 + 32.0
         return temp_c
 while True:
- print(read_temp()) 
  temper=read_temp()
+ print(temper) 
+ res1= urllib.request.Request("http://10.42.0.203:8080/logone?temp="+str(temper))
+ data= urllib.request.urlopen(res1).read()
  res= requests.post("https://api.thingspeak.com/update?api_key=I1GWGSAM6V2EHB32&field1="+str(temper),data="a")
- time.sleep(1)
+ time.sleep(10)
 
